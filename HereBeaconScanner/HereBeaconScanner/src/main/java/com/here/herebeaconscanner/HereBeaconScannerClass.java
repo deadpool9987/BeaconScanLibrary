@@ -11,10 +11,11 @@ import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.Region;
 
-public class HereBeaconScannerClass implements BeaconConsumer {
+public class HereBeaconScannerClass implements BeaconConsumer,HerebeaconScannerInterface {
 
     protected static final String TAG = "MonitoringActivity";
     private static BeaconManager beaconManager;
+
 
     public static void scanBeacon(final Context context){
         beaconManager = BeaconManager.getInstanceForApplication(context);
@@ -27,11 +28,13 @@ public class HereBeaconScannerClass implements BeaconConsumer {
             @Override
             public void didEnterRegion(Region region) {
                 Log.i(TAG, "I just saw an beacon for the first time!");
+                didFindBeacon(region);
             }
 
             @Override
             public void didExitRegion(Region region) {
                 Log.i(TAG, "I no longer see an beacon");
+                didLooseBeacon(region);
             }
 
             @Override
@@ -58,5 +61,15 @@ public class HereBeaconScannerClass implements BeaconConsumer {
     @Override
     public boolean bindService(Intent intent, ServiceConnection serviceConnection, int i) {
         return false;
+    }
+
+    @Override
+    public void didFindBeacon(Region region) {
+
+    }
+
+    @Override
+    public void didLooseBeacon(Region region) {
+
     }
 }
